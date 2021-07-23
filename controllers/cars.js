@@ -1,6 +1,8 @@
+const repository = require('../repositories/carsRepository');
+
 const Controller = {
   findCarsForUser: () => {
-    return { cars: [{name: 'Renault Megane'}, {name: 'Fiat Punto'}] };
+    return { cars: repository.findCarsOwnedBy(1) };
   }
 };
 
