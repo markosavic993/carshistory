@@ -8,8 +8,8 @@ const controller = require('../controllers/cars');
 // });
 
 /* GET cars data. */
-router.get('/', function(req, res, next) {
-  res.render('cars/carsList', controller.findCarsForUser());
+router.get('/', async function(req, res, next) {
+  res.send(await controller.findCarsForUser());
 });
 
 module.exports = router;
