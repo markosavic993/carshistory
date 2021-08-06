@@ -12,4 +12,8 @@ router.get('/', async function(req, res, next) {
   res.send(await controller.findCarsForUser());
 });
 
+router.post('/services', async function(req, res, next) {
+  res.send(await controller.addServiceHistoryEntry(req.body));
+});
+
 module.exports = router;
