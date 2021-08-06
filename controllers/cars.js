@@ -11,7 +11,7 @@ const Controller = {
       serviceType: payload.serviceType,
       description: payload.description
     });
-    return {message: `Service history entry created for ${vin}`};
+    return {message: `Service history entry created for ${payload.vin}`};
   },
 };
 
