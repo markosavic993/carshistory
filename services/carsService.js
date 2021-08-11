@@ -8,9 +8,12 @@ const url = 'mongodb://localhost:27017/carshistory';
 const Service = {
   findCarsOwnedBy: async ownerId => {
     await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
-    return await cars.find({owner: ownerId}).populate('engineData').exec();
+    return await cars.find({owner: ownerId}).exec();
   },
-
+  findCarByOwnerAndId: async (ownerId, carId) => {
+    await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
+    return await cars.findOne({owner: ownerId, _id: carId}).populate('engineData').exec();
+  },
   addServiceEntry: async (ownerId, vin, data) => {
     await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
     return await cars.updateOne(

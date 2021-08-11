@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 function Dashboard() {
   const [data, setData] = useState({ cars: [] });
@@ -17,7 +18,9 @@ function Dashboard() {
       <h2>Dashboard</h2>
       <ul>
         {data.cars.map(car => (
-          <li key={car.name}>{car.name}</li>
+          <li key={car.name}>
+            <Link to={`/cars/${car._id}`} >{car.name}</Link>
+          </li>
         ))}
       </ul>
     </div>

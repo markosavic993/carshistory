@@ -16,9 +16,6 @@ function App() {
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          <li>
-            <Link to="/car">Car</Link>
-          </li>
         </ul>
 
         <hr />
@@ -31,7 +28,7 @@ function App() {
           of them to render at a time
         */}
         <Switch>
-          <Route path="/car">
+          <Route path="/cars/:carId">
             <SingleCar />
           </Route>
           <Route path="/dashboard">
