@@ -1,0 +1,33 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: #61dafb 1px solid;
+  background-color: #e6f9fe;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  padding: 12px;
+
+  .cardImage {
+    width: 400px;
+  }
+
+  .data {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .detailsLink {
+    color: #0489ae;
+    font-size: 20px;
+    text-decoration: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .card {
+    .cardImage {
+      width: 200px
+    }
+  }
+}

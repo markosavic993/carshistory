@@ -1,25 +1,30 @@
-import './App.css';
+import './App.scss';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from 'react-router-dom';
-import Dashboard from './Dashboard';
+import Dashboard from './views/dashboard/Dashboard';
 import SingleCar from './SingleCar';
+import logo from './assets/images/car-icon.svg';
 
 function App() {
   return (
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        </ul>
-
-        <hr />
-
+      <div className="App">
+        <div className="App-header">
+          <div>
+            <img src={logo} className="App-logo" alt="logo" />
+          </div>
+          <div className="navigation">
+            <ul>
+              <li>
+                <Link className="App-link" to="/dashboard">Dashboard</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
         {/*
           A <Switch> looks through all its children <Route>
           elements and renders the first one whose path
