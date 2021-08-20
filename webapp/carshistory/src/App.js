@@ -6,7 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 import Dashboard from './views/dashboard/Dashboard';
-import SingleCar from './SingleCar';
+import SingleCar from './views/singlecar/SingleCar';
 import logo from './assets/images/car-icon.svg';
 
 function App() {
