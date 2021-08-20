@@ -8,14 +8,15 @@ const Controller = {
     const { carId } = params;
     return await service.findCarByOwnerAndId('6100166ae330e04aad617900', carId);
   },
-  addServiceHistoryEntry: async (payload) => {
-    await service.addServiceEntry('6100166ae330e04aad617900', payload.vin, {
+  addServiceHistoryEntry: async (params, payload) => {
+    const { carId } = params;
+    await service.addServiceEntry('6100166ae330e04aad617900', carId, {
       date: payload.date,
       mileage: payload.mileage,
       serviceType: payload.serviceType,
       description: payload.description
     });
-    return {message: `Service history entry created for ${payload.vin}`};
+    return {message: `Service history entry created for ${carId}`};
   },
   insertNewCar: async (payload) => {
     return await service.createNewCar({

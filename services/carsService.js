@@ -15,9 +15,9 @@ const Service = {
   findCarByOwnerAndId: async (ownerId, carId) => {
     return await cars.findOne({owner: ownerId, _id: carId}).populate('engineData').exec();
   },
-  addServiceEntry: async (ownerId, vin, data) => {
+  addServiceEntry: async (ownerId, carId, data) => {
     return await cars.updateOne(
-      {vin, owner: ownerId},
+      {_id: carId, owner: ownerId},
       {$push: {serviceHistory: data}}
     ).exec();
   }

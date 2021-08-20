@@ -30,13 +30,12 @@ function SingleCar() {
     setWorking(true);
     event.preventDefault();
     console.log({serviceHistoryDate, serviceHistoryMilege: serviceHistoryMileage, serviceHistoryType, serviceHistoryDescription});
-    const result = await axios.post('http://localhost:5000/cars/services',
+    const result = await axios.post(`http://localhost:5000/cars/${carId}/services`,
       {
         date: serviceHistoryDate,
         mileage: serviceHistoryMileage,
         serviceType: serviceHistoryType,
-        description: serviceHistoryDescription,
-        vin: carData.vin
+        description: serviceHistoryDescription
       });
 
 
@@ -45,8 +44,7 @@ function SingleCar() {
     setServiceHistoryType('INTERIM_SERVICE');
     setServiceHistoryDescription('');
     setWorking(false)
-    console.log(result);
-  };
+  }
 
   return (
     <div>

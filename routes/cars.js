@@ -17,8 +17,8 @@ router.get('/:carId', async function(req, res, next) {
   res.send(await controller.findCarById(req.params));
 });
 
-router.post('/services', async function(req, res, next) {
-  res.send(await controller.addServiceHistoryEntry(req.body));
+router.post('/:carId/services', async function(req, res, next) {
+  res.send(await controller.addServiceHistoryEntry(req.params, req.body));
 });
 
 module.exports = router;
