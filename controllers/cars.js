@@ -23,6 +23,7 @@ const Controller = {
       vin: payload.vin,
       name: `${payload.make} ${payload.model}`,
       images: [],
+      productionYear: payload.productionYear,
       color: payload.color,
       countryOrigin: payload.country,
       transmission: payload.transmission,

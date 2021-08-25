@@ -29,8 +29,7 @@ function SingleCar() {
   const submitHandler = async (event) => {
     setWorking(true);
     event.preventDefault();
-    console.log({serviceHistoryDate, serviceHistoryMilege: serviceHistoryMileage, serviceHistoryType, serviceHistoryDescription});
-    const result = await axios.post(`http://localhost:5000/cars/${carId}/services`,
+    await axios.post(`http://localhost:5000/cars/${carId}/services`,
       {
         date: serviceHistoryDate,
         mileage: serviceHistoryMileage,
@@ -110,7 +109,7 @@ function SingleCar() {
 
             <label className="formField">
               Service type
-              <select id="lang" onChange={e => setServiceHistoryType(e.target.value)} value={serviceHistoryType}>
+              <select id="serviceType" onChange={e => setServiceHistoryType(e.target.value)} value={serviceHistoryType}>
                 <option value="INTERIM_SERVICE">Interim service</option>
                 <option value="FULL_SERVICE">Full service</option>
                 <option value="AC_SERVICE">Air condition service</option>

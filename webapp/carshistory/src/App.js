@@ -8,6 +8,7 @@ import {
 import Dashboard from './views/dashboard/Dashboard';
 import SingleCar from './views/singlecar/SingleCar';
 import logo from './assets/images/car-icon.svg';
+import CreateUpdateCar from "./views/createupdatecar/CreateUpdateCar";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
             <ul>
               <li>
                 <Link className="App-link" to="/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <Link className="App-link" to="/new">Add new car</Link>
               </li>
             </ul>
           </div>
@@ -38,6 +42,9 @@ function App() {
           </Route>
           <Route path="/dashboard">
             <Dashboard />
+          </Route>
+          <Route path="/new">
+            <CreateUpdateCar />
           </Route>
         </Switch>
       </div>

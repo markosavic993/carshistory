@@ -30,7 +30,17 @@
   flex-direction: row;
 
   ul {
+    display: flex;
+    flex-direction: row;
     list-style-type: none;
+
+    li {
+      margin-right: 12px;
+    }
+
+    li:last-child {
+      margin-right: 0;
+    }
   }
 }
 
