@@ -42,8 +42,14 @@ function SingleCar() {
     setServiceHistoryDate(Date.now());
     setServiceHistoryType('INTERIM_SERVICE');
     setServiceHistoryDescription('');
-    setWorking(false)
-  }
+    setWorking(false);
+  };
+
+  const deleteServiceHistoryHandler = async (event, serviceHistoryEntryId) => {
+    setWorking(true);
+    await axios.delete(`http://localhost:5000/cars/${carId}/services/${serviceHistoryEntryId}`);
+    setWorking(false);
+  };
 
   return (
     <div>
@@ -81,6 +87,11 @@ function SingleCar() {
               <p className="mainDataItem">Mileage: {historyEntry.mileage}</p>
               <p className="mainDataItem">Date: {historyEntry.date}</p>
               <p className="mainDataItem">Description: {historyEntry.description}</p>
+
+              <div className="actions">
+                <a className="infoButton">Update</a>
+                <a className="dangerButton" onClick={(e) => deleteServiceHistoryHandler(e, historyEntry._id)}>Delete</a>
+              </div>
             </div>
           ))}
         </details>
@@ -126,7 +137,7 @@ function SingleCar() {
                         required/>
             </label>
 
-            <input className="submitButton" type="submit" value="Create"/>
+            <input className="infoButton" type="submit" value="Create"/>
           </form>
         </details>
       </div>

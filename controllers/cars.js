@@ -32,6 +32,10 @@ const Controller = {
       owner: '6100166ae330e04aad617900',
       serviceHistory: []
     });
+  },
+  removeServiceHistoryEntry: async (params) => {
+    const { carId, serviceHistoryId } = params;
+    return await service.deleteServiceEntry('6100166ae330e04aad617900', carId, serviceHistoryId)
   }
 };
 

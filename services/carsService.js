@@ -20,6 +20,12 @@ const Service = {
       {_id: carId, owner: ownerId},
       {$push: {serviceHistory: data}}
     ).exec();
+  },
+  deleteServiceEntry: async (ownerId, carId, serviceHistoryId) => {
+    return await cars.updateOne(
+      {_id: carId, owner: ownerId},
+      {$pull: {serviceHistory: { _id: serviceHistoryId }}}
+    ).exec();
   }
 };
 

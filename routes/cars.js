@@ -21,4 +21,8 @@ router.post('/:carId/services', async function(req, res, next) {
   res.send(await controller.addServiceHistoryEntry(req.params, req.body));
 });
 
+router.delete('/:carId/services/:serviceHistoryId', async function(req, res, next) {
+  res.send(await controller.removeServiceHistoryEntry(req.params));
+});
+
 module.exports = router;

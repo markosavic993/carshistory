@@ -9,9 +9,19 @@
 }
 
 .serviceHistoryEntry  {
-    border-bottom: 1px solid #0489ae;
+    border-bottom: 3px solid #0489ae;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+
+    .actions {
+        margin-bottom: 12px;
+        padding-top: 12px;
+        border-top: 1px solid #0489ae;
+
+        a {
+            margin-right: 8px;
+        }
+    }
 }
 
 .serviceHistoryForm {
@@ -36,16 +46,30 @@
             height: 32px;
         }
     }
+}
 
-    .submitButton {
-        width: 120px;
-        height: 35px;
-        background-color: #fff;
-        position: relative;
-        border: 3px solid #0489ae;
-        color: #0489ae;
-        border-radius: 22px;
-        transition: all .3s cubic-bezier(.13,.71,.57,1.29);
-        cursor: pointer;
-    }
+.infoButton {
+    width: 120px;
+    height: 35px;
+    background-color: #fff;
+    position: relative;
+    border: 3px solid #0489ae;
+    color: #0489ae;
+    border-radius: 22px;
+    transition: all .3s cubic-bezier(.13,.71,.57,1.29);
+    cursor: pointer;
+    padding: 4px;
+}
+
+.dangerButton {
+    width: 120px;
+    height: 35px;
+    background-color: #fff;
+    position: relative;
+    border: 3px solid #b30000;
+    color: #b30000;
+    border-radius: 22px;
+    transition: all .3s cubic-bezier(.13,.71,.57,1.29);
+    cursor: pointer;
+    padding: 4px;
 }
