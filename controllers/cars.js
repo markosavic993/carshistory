@@ -36,6 +36,10 @@ const Controller = {
   removeServiceHistoryEntry: async (params) => {
     const { carId, serviceHistoryId } = params;
     return await service.deleteServiceEntry('6100166ae330e04aad617900', carId, serviceHistoryId)
+  },
+  deleteSingleCar: async (params) => {
+    const { carId } = params;
+    return await service.deleteCarByOwnerAndId('6100166ae330e04aad617900', carId)
   }
 };
 

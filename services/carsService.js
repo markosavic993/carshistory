@@ -15,6 +15,9 @@ const Service = {
   findCarByOwnerAndId: async (ownerId, carId) => {
     return await cars.findOne({owner: ownerId, _id: carId}).populate('engineData').exec();
   },
+  deleteCarByOwnerAndId: async (ownerId, carId) => {
+    return await cars.deleteOne({owner: ownerId, _id: carId}).exec();
+  },
   addServiceEntry: async (ownerId, carId, data) => {
     return await cars.updateOne(
       {_id: carId, owner: ownerId},
