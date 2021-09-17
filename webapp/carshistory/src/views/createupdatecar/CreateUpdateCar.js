@@ -1,7 +1,8 @@
 import './CreateUpdateCar.scss';
-import {useState} from "react";
-import { useHistory } from "react-router-dom";
+import {useContext, useState} from "react";
+import {useHistory} from "react-router-dom";
 import axios from "axios";
+import {UserContext} from "../../context/UserContext";
 
 function CreateUpdateCar() {
   const history = useHistory();
@@ -18,6 +19,7 @@ function CreateUpdateCar() {
   const [engineType, setEngineType] = useState('PETROL');
   const [engineVolume, setEngineVolume] = useState(0);
   const [enginePower, setEnginePower] = useState(0);
+  const [userContext, setUserContext] = useContext(UserContext)
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -26,6 +28,11 @@ function CreateUpdateCar() {
         vin, make, model, productionYear, mileage, color, transmission, country: countryOrigin,
         engine: {
           name: engineName, type: engineType, power: enginePower, volume: engineVolume
+        }
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${userContext.token}`
         }
       });
 

@@ -1,11 +1,12 @@
 import './SingleCar.scss';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {
   useParams
 } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import {Carousel} from 'react-responsive-carousel';
+import {UserContext} from "../../context/UserContext";
 
 function SingleCar() {
   const {carId} = useParams();
@@ -15,11 +16,17 @@ function SingleCar() {
   const [serviceHistoryMileage, setServiceHistoryMileage] = useState(0);
   const [serviceHistoryType, setServiceHistoryType] = useState('INTERIM_SERVICE');
   const [serviceHistoryDescription, setServiceHistoryDescription] = useState('');
+  const [userContext, setUserContext] = useContext(UserContext)
 
   useEffect(async () => {
-    if(!working) {
-      const result = await axios(
+    if (!working) {
+      const result = await axios.get(
         `http://localhost:5000/cars/${carId}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${userContext.token}`
+          }
+        }
       );
 
       setCarDara(result.data);
@@ -35,6 +42,11 @@ function SingleCar() {
         mileage: serviceHistoryMileage,
         serviceType: serviceHistoryType,
         description: serviceHistoryDescription
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${userContext.token}`
+        }
       });
 
 
@@ -47,7 +59,12 @@ function SingleCar() {
 
   const deleteServiceHistoryHandler = async (event, serviceHistoryEntryId) => {
     setWorking(true);
-    await axios.delete(`http://localhost:5000/cars/${carId}/services/${serviceHistoryEntryId}`);
+    await axios.delete(`http://localhost:5000/cars/${carId}/services/${serviceHistoryEntryId}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${userContext.token}`
+        }
+      });
     setWorking(false);
   };
 

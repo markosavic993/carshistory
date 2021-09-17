@@ -1,32 +1,33 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/cars');
+const {verifyUser} = require("../authenticate");
 
 /* GET cars data. */
-router.get('/', async function(req, res, next) {
-  res.send(await controller.findCarsForUser());
+router.get('/', verifyUser, async function(req, res, next) {
+  res.send(await controller.findCarsForUser(req.user));
 });
 
 /* GET cars data. */
-router.post('/', async function(req, res, next) {
-  res.send(await controller.insertNewCar(req.body));
+router.post('/', verifyUser, async function(req, res, next) {
+  res.send(await controller.insertNewCar(req.body, req.user));
 });
 
 /* GET single car data. */
-router.get('/:carId', async function(req, res, next) {
-  res.send(await controller.findCarById(req.params));
+router.get('/:carId', verifyUser, async function(req, res, next) {
+  res.send(await controller.findCarById(req.params, req.user));
 });
 
-router.delete('/:carId', async function(req, res, next) {
-  res.send(await controller.deleteSingleCar(req.params));
+router.delete('/:carId', verifyUser, async function(req, res, next) {
+  res.send(await controller.deleteSingleCar(req.params, req.user));
 });
 
-router.post('/:carId/services', async function(req, res, next) {
-  res.send(await controller.addServiceHistoryEntry(req.params, req.body));
+router.post('/:carId/services', verifyUser, async function(req, res, next) {
+  res.send(await controller.addServiceHistoryEntry(req.params, req.body, req.user));
 });
 
-router.delete('/:carId/services/:serviceHistoryId', async function(req, res, next) {
-  res.send(await controller.removeServiceHistoryEntry(req.params));
+router.delete('/:carId/services/:serviceHistoryId', verifyUser, async function(req, res, next) {
+  res.send(await controller.removeServiceHistoryEntry(req.params, req.user));
 });
 
 module.exports = router;

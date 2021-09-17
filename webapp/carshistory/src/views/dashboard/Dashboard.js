@@ -1,16 +1,23 @@
 import './Dashboard.scss';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import CarPreview from "../../components/carpreview/CarPreview";
+import {UserContext} from "../../context/UserContext";
 
 function Dashboard() {
-  const [data, setData] = useState({ cars: [] });
+  const [data, setData] = useState({cars: []});
   const [working, setWorking] = useState(false);
+  const [userContext, setUserContext] = useContext(UserContext)
 
   useEffect(async () => {
-    if(!working) {
-      const result = await axios(
+    if (!working) {
+      const result = await axios.get(
         'http://localhost:5000/cars',
+        {
+          headers: {
+            'Authorization': `Bearer ${userContext.token}`
+          }
+        }
       );
 
       setData(result.data);
@@ -19,7 +26,12 @@ function Dashboard() {
 
   const onDeleteCarTriggered = async (car) => {
     setWorking(true);
-    await axios.delete(`http://localhost:5000/cars/${car._id}`);
+    await axios.delete(`http://localhost:5000/cars/${car._id}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${userContext.token}`
+        }
+      });
     setWorking(false);
   };
 
@@ -29,9 +41,9 @@ function Dashboard() {
       <div className="container">
         <div className="cars">
           <p className="subtitle">Cars</p>
-            {data.cars.map(car => (
-                <CarPreview car={car} onDeleteCarTriggered={onDeleteCarTriggered} />
-            ))}
+          {data.cars.map(car => (
+            <CarPreview car={car} onDeleteCarTriggered={onDeleteCarTriggered}/>
+          ))}
         </div>
         <div className="otherSections">
           <div className="recentActivities">
