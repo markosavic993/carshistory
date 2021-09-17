@@ -7,16 +7,48 @@ import {
 } from 'react-router-dom';
 import Dashboard from './views/dashboard/Dashboard';
 import SingleCar from './views/singlecar/SingleCar';
+import Login from "./views/login/Login";
+import Register from "./views/register/Register";
 import logo from './assets/images/car-icon.svg';
-import CreateUpdateCar from "./views/createupdatecar/CreateUpdateCar";
+import CreateUpdateCar from './views/createupdatecar/CreateUpdateCar';
+import ProtectedRoute from './components/protectedroute/ProtectedRoute';
+import {useCallback, useContext, useEffect} from 'react';
+import {UserContext} from './context/UserContext';
+import axios from 'axios';
 
 function App() {
+  const [userContext, setUserContext] = useContext(UserContext);
+
+  const verifyUser = useCallback(() => {
+    axios.post('http://localhost:5000/users/refreshToken',
+      {},
+      { withCredentials: true }
+    ).then(async response => {
+      if (response.status === 200) {
+        const data = await response.json()
+        setUserContext(oldValues => {
+          return {...oldValues, token: data.token}
+        })
+      } else {
+        setUserContext(oldValues => {
+          return {...oldValues, token: null}
+        })
+      }
+      // call refreshToken every 5 minutes to renew the authentication token.
+      setTimeout(verifyUser, 1 * 60 * 1000)
+    })
+  }, [setUserContext]);
+
+  useEffect(() => {
+    verifyUser()
+  }, [verifyUser])
+
   return (
     <Router>
       <div className="App">
         <div className="App-header">
           <div>
-            <img src={logo} className="App-logo" alt="logo" />
+            <img src={logo} className="App-logo" alt="logo"/>
           </div>
           <div className="navigation">
             <ul>
@@ -37,15 +69,15 @@ function App() {
           of them to render at a time
         */}
         <Switch>
-          <Route path="/cars/:carId">
-            <SingleCar />
+          <Route path="/login">
+            <Login/>
           </Route>
-          <Route path="/dashboard">
-            <Dashboard />
+          <Route path="/register">
+            <Register/>
           </Route>
-          <Route path="/new">
-            <CreateUpdateCar />
-          </Route>
+          <ProtectedRoute path="/cars/:carId" component={SingleCar}/>
+          <ProtectedRoute path="/dashboard" component={Dashboard}/>
+          <ProtectedRoute path="/new" component={CreateUpdateCar}/>
         </Switch>
       </div>
     </Router>

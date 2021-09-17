@@ -29,8 +29,6 @@ function CreateUpdateCar() {
         }
       });
 
-    console.log(result);
-
     history.push(`/cars/${result.data._id}`);
   }
 

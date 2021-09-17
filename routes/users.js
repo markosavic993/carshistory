@@ -67,7 +67,7 @@ router.post("/refreshToken", (req, res, next) => {
   const { refreshToken } = signedCookies
   if (refreshToken) {
     try {
-      const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
+      const payload = jwt.verify(refreshToken, 'super_special_refresh_token_secret')
       const userId = payload._id
       User.findOne({ _id: userId }).then(
         user => {
