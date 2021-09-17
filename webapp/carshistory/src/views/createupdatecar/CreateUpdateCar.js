@@ -3,9 +3,11 @@ import {useContext, useState} from "react";
 import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {UserContext} from "../../context/UserContext";
+import ImageUploading from 'react-images-uploading';
 
 function CreateUpdateCar() {
   const history = useHistory();
+  const [userContext, setUserContext] = useContext(UserContext)
 
   const [vin, setVin] = useState('');
   const [make, setMake] = useState('');
@@ -19,7 +21,9 @@ function CreateUpdateCar() {
   const [engineType, setEngineType] = useState('PETROL');
   const [engineVolume, setEngineVolume] = useState(0);
   const [enginePower, setEnginePower] = useState(0);
-  const [userContext, setUserContext] = useContext(UserContext)
+  const [images, setImages] = useState([]);
+
+  const maxNumber = 69;
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -38,6 +42,12 @@ function CreateUpdateCar() {
 
     history.push(`/cars/${result.data._id}`);
   }
+
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
 
   return (
     <div>
@@ -110,6 +120,52 @@ function CreateUpdateCar() {
             <option value="MANUAL">Manual</option>
             <option value="AUTOMATIC">Automatic / Semi-automatic</option>
           </select>
+        </label>
+
+        {/*IMAGES*/}
+        <label className="formField">
+          Insert images
+          <ImageUploading
+            multiple
+            value={images}
+            onChange={onChange}
+            maxNumber={maxNumber}
+            dataURLKey="data_url"
+          >
+            {({
+                imageList,
+                onImageUpload,
+                onImageRemoveAll,
+                onImageRemove,
+                isDragging,
+                dragProps,
+              }) => (
+              // write your building UI
+              <div className="upload__image-wrapper">
+                <button
+                  className="actionItems"
+                  style={isDragging ? {color: 'red'} : undefined}
+                  onClick={onImageUpload}
+                  {...dragProps}
+                >
+                  Click or Drop here
+                </button>
+                &nbsp;
+                <button onClick={onImageRemoveAll} className="actionItems">Remove all images</button>
+                <div className="images">
+                  {imageList.map((image, index) => (
+                    <div key={index} className="image-item">
+                      <img src={image['data_url']} alt="" width="100"/>
+                      <div className="image-item__btn-wrapper">
+                        <button className="actionItems" onClick={() => onImageRemove(index)}>Remove</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </ImageUploading>
+
         </label>
 
         {/*ENGINE DATA*/}

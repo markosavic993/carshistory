@@ -39,4 +39,28 @@
     transition: all .3s cubic-bezier(.13,.71,.57,1.29);
     cursor: pointer;
   }
+
+  .upload__image-wrapper {
+    margin-top: 8px;
+
+    .actionItems {
+      border: 3px solid #0489ae;
+      color: #0489ae;
+      border-radius: 22px;
+    }
+
+    .images {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .image-item {
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+
+    .image-item__btn-wrapper {
+      margin-top: 4px;
+    }
+  }
 }
