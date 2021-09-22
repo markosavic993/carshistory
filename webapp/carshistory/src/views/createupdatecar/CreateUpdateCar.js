@@ -4,6 +4,7 @@ import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {UserContext} from "../../context/UserContext";
 import ImageUploading from 'react-images-uploading';
+import {uploadFile} from "../../aws/s3Client";
 
 function CreateUpdateCar() {
   const history = useHistory();
@@ -30,6 +31,7 @@ function CreateUpdateCar() {
     const result = await axios.post('http://localhost:5000/cars',
       {
         vin, make, model, productionYear, mileage, color, transmission, country: countryOrigin,
+        images: images.map(image => `https://cars-history-images.s3.eu-central-1.amazonaws.com/${image.file.name}`),
         engine: {
           name: engineName, type: engineType, power: enginePower, volume: engineVolume
         }
@@ -43,10 +45,14 @@ function CreateUpdateCar() {
     history.push(`/cars/${result.data._id}`);
   }
 
-  const onChange = (imageList, addUpdateIndex) => {
+  const onChange = async (imageList, addUpdateIndex) => {
     // data for submit
     console.log(imageList, addUpdateIndex);
-    setImages(imageList);
+    if (addUpdateIndex) {
+      const newImage = imageList[addUpdateIndex];
+      const result = await uploadFile(newImage.file);
+    }
+    setImages(imageList)
   };
 
   return (

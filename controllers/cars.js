@@ -22,7 +22,7 @@ const Controller = {
     return await service.createNewCar({
       vin: payload.vin,
       name: `${payload.make} ${payload.model}`,
-      images: [],
+      images: payload.images || [],
       productionYear: payload.productionYear,
       color: payload.color,
       countryOrigin: payload.country,
