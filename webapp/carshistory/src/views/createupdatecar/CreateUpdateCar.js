@@ -31,7 +31,6 @@ function CreateUpdateCar() {
     const result = await axios.post('http://localhost:5000/cars',
       {
         vin, make, model, productionYear, mileage, color, transmission, country: countryOrigin,
-        images: images.map(image => `https://cars-history-images.s3.eu-central-1.amazonaws.com/${image.file.name}`),
         engine: {
           name: engineName, type: engineType, power: enginePower, volume: engineVolume
         }
@@ -42,16 +41,31 @@ function CreateUpdateCar() {
         }
       });
 
+    await uploadImages(result.data._id);
+
     history.push(`/cars/${result.data._id}`);
   }
+
+  const uploadImages = async (carId) => {
+    for (let i = 0; i < images.length; i++){
+      const file = images[i].file;
+      console.log("Upload Image", file);
+      const formData = new FormData();
+      formData.append("myFile", file);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+          'Authorization': `Bearer ${userContext.token}`
+        }
+      };
+      const result = await axios.post(`http://localhost:5000/cars/${carId}/upload`, formData, config);
+      console.log("REsult: ", result);
+    }
+  };
 
   const onChange = async (imageList, addUpdateIndex) => {
     // data for submit
     console.log(imageList, addUpdateIndex);
-    if (addUpdateIndex) {
-      const newImage = imageList[addUpdateIndex];
-      const result = await uploadFile(newImage.file);
-    }
     setImages(imageList)
   };
 

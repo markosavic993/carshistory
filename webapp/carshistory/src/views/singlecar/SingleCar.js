@@ -74,7 +74,7 @@ function SingleCar() {
       <Carousel className="appCarousel">
         {carData.images.map(imageUrl => (
           <div>
-            <img src={imageUrl} alt=""/>
+            <img src={`http://localhost:5000/${imageUrl}`} alt=""/>
           </div>
         ))}
       </Carousel>

@@ -21,7 +21,7 @@ function CarPreview(props) {
           <a className="dangerButton" onClick={deleteCarHandler}>Delete</a>
         </div>
       </div>
-      <img src={car.images[0]} alt="" className="cardImage"/>
+      <img src={`http://localhost:5000/${car.images[0]}`} alt="" className="cardImage"/>
     </div>
   );
 }

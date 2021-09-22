@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/cars');
+const {upload} = require("../helpers/fileUpload");
 const {verifyUser} = require("../authenticate");
 
 /* GET cars data. */
@@ -28,6 +29,10 @@ router.post('/:carId/services', verifyUser, async function(req, res, next) {
 
 router.delete('/:carId/services/:serviceHistoryId', verifyUser, async function(req, res, next) {
   res.send(await controller.removeServiceHistoryEntry(req.params, req.user));
+});
+
+router.post('/:carId/upload', verifyUser, upload.single("myFile"), async (req, res) => {
+  res.send(await controller.uploadImage(req.params, req.user, req.file));
 });
 
 module.exports = router;

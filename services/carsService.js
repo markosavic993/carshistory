@@ -18,6 +18,12 @@ const Service = {
   deleteCarByOwnerAndId: async (ownerId, carId) => {
     return await cars.deleteOne({owner: ownerId, _id: carId}).exec();
   },
+  addCarPhoto: async (ownerId, carId, filename) => {
+    return await cars.updateOne(
+        {_id: carId, owner: ownerId},
+      {$push: {images: filename}}
+    ).exec();
+  },
   addServiceEntry: async (ownerId, carId, data) => {
     return await cars.updateOne(
       {_id: carId, owner: ownerId},

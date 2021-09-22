@@ -40,6 +40,10 @@ const Controller = {
   deleteSingleCar: async (params, user) => {
     const { carId } = params;
     return await service.deleteCarByOwnerAndId(user._id, carId)
+  },
+  uploadImage: async(params, user, file) => {
+    const { carId } = params;
+    return await service.addCarPhoto(user._id, carId, file.path)
   }
 };
 

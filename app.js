@@ -33,6 +33,7 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 
+app.use('/public', express.static('public'));
 app.use(passport.initialize());
 app.use("/users", userRouter);
 app.use('/cars', carsRouter);
@@ -50,7 +51,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({ error: err });
 });
 
 module.exports = app;
