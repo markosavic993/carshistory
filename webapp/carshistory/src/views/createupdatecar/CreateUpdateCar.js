@@ -165,19 +165,36 @@ function CreateUpdateCar() {
                 <button
                   className="actionItems"
                   style={isDragging ? {color: 'red'} : undefined}
-                  onClick={onImageUpload}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onImageUpload();
+                  }}
                   {...dragProps}
                 >
                   Click or Drop here
                 </button>
                 &nbsp;
-                <button onClick={onImageRemoveAll} className="actionItems">Remove all images</button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onImageRemoveAll();
+                  }}
+                  className="actionItems">
+                  Remove all images
+                </button>
                 <div className="images">
                   {imageList.map((image, index) => (
                     <div key={index} className="image-item">
                       <img src={image['data_url']} alt="" width="100"/>
                       <div className="image-item__btn-wrapper">
-                        <button className="actionItems" onClick={() => onImageRemove(index)}>Remove</button>
+                        <button
+                          className="actionItems"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            onImageRemove(index);
+                          }}>
+                          Remove
+                        </button>
                       </div>
                     </div>
                   ))}
