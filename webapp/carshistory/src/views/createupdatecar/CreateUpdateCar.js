@@ -4,7 +4,6 @@ import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {UserContext} from "../../context/UserContext";
 import ImageUploading from 'react-images-uploading';
-import {uploadFile} from "../../aws/s3Client";
 
 function CreateUpdateCar() {
   const history = useHistory();
