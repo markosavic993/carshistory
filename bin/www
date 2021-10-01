@@ -6,9 +6,9 @@
 const app = require('../app');
 const debug = require('debug')('car-history:server');
 const http = require('http');
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const mongoUrl = 'mongodb://localhost:27017/carshistory';
+const mongoUrl = process.env.MONGO_DB_CONNECTION_STRING;
 
 /**
  * Get port from environment and store in Express.

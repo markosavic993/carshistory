@@ -7,17 +7,17 @@ exports.COOKIE_OPTIONS = {
   // secure cookies do not work correctly (in postman)
   secure: !dev,
   signed: true,
-  maxAge: eval((60 * 60 * 24 * 30).toString()) * 1000,
+  maxAge: eval(process.env.REFRESH_TOKEN_EXPIRY) * 1000,
   sameSite: 'none',
 }
 exports.getToken = user => {
-  return jwt.sign(user, 'super_special_jwt_secret', {
-    expiresIn: eval((60*15).toString()),
+  return jwt.sign(user, process.env.JWT_SECRET, {
+    expiresIn: eval(process.env.SESSION_EXPIRY),
   })
 }
 exports.getRefreshToken = user => {
-  const refreshToken = jwt.sign(user, 'super_special_refresh_token_secret', {
-    expiresIn: eval((60 * 60 * 24 * 30).toString()),
+  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: eval(process.env.REFRESH_TOKEN_EXPIRY),
   })
   return refreshToken
 }

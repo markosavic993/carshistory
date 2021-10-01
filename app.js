@@ -5,9 +5,14 @@ const logger = require('morgan');
 const cors = require('cors');
 const passport = require("passport");
 
-require("./strategies/JwtStrategy");
-require("./strategies/LocalStrategy");
-require("./authenticate");
+if (process.env.NODE_ENV !== "production") {
+  // Load environment variables from .env file in non prod environments
+  require("dotenv").config()
+}
+
+require('./strategies/JwtStrategy');
+require('./strategies/LocalStrategy');
+require('./authenticate');
 
 const carsRouter = require('./routes/cars');
 const userRouter = require("./routes/users");
@@ -17,9 +22,11 @@ const app = express();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser('cookie_parser_secret'));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
-const whitelist = ['http://localhost:3000'];
+const whitelist = process.env.WHITELISTED_DOMAINS
+  ? process.env.WHITELISTED_DOMAINS.split(",")
+  : [];
 
 const corsOptions = {
   origin: function (origin, callback) {
