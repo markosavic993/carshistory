@@ -1,3 +1,4 @@
+import '../Auth.scss';
 import {useContext, useState} from "react";
 import axios from "axios";
 import { UserContext } from '../../context/UserContext';
@@ -34,8 +35,8 @@ function Register(props) {
 
   return (
     <div>
-      <p>Register</p>
-      <form className="registrationForm" onSubmit={submitHandler}>
+      <form className="authForm" onSubmit={submitHandler}>
+        <p className="title">Register</p>
         <label className="formField">
           First name
           <input type="text"
@@ -69,9 +70,8 @@ function Register(props) {
         </label>
 
         <input className="infoButton" type="submit" value="Register"/>
+        <p>Already have an account? <Link to={`/login`} >Go to login!</Link></p>
       </form>
-
-      <p>Already have an account? <Link to={`/login`} >Go to login!</Link></p>
     </div>
   );
 }

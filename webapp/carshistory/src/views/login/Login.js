@@ -1,3 +1,4 @@
+import '../Auth.scss';
 import {useContext, useState} from 'react';
 import axios from 'axios';
 import {UserContext} from '../../context/UserContext';
@@ -31,8 +32,8 @@ function Login(props) {
 
   return (
     <div>
-      <p>Login</p>
-      <form className="loginForm" onSubmit={submitHandler}>
+      <form className="authForm" onSubmit={submitHandler}>
+        <p className="title">Login</p>
         <label className="formField">
           Email
           <input type="email"
@@ -50,9 +51,9 @@ function Login(props) {
         </label>
 
         <input className="infoButton" type="submit" value="Login"/>
+        <p>New to CarsHistory.com? <Link to={`/register`} >Create new user!</Link></p>
       </form>
 
-      <p>New to CarsHistory.com? <Link to={`/register`} >Create new user!</Link></p>
     </div>
   );
 }

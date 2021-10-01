@@ -1,0 +1,20 @@
+.authForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .formField {
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+
+    input {
+      margin-top: 8px;
+      margin-bottom: 8px;
+      height: 24px;
+      border-radius: 4px;
+      border-color: #0489ae;
+    }
+  }
+}
