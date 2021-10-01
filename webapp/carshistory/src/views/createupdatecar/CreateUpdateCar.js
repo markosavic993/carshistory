@@ -9,7 +9,7 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 function CreateUpdateCar() {
   const history = useHistory();
-  const [userContext, setUserContext] = useContext(UserContext)
+  const [userContext,] = useContext(UserContext)
 
   const [vin, setVin] = useState('');
   const [make, setMake] = useState('');
@@ -58,13 +58,12 @@ function CreateUpdateCar() {
           'Authorization': `Bearer ${userContext.token}`
         }
       };
-      const result = await axios.post(`${BASE_URL}/cars/${carId}/upload`, formData, config);
+      await axios.post(`${BASE_URL}/cars/${carId}/upload`, formData, config);
     }
   };
 
   const onChange = async (imageList, addUpdateIndex) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList)
   };
 

@@ -24,7 +24,7 @@ function Register(props) {
     }));
   }
 
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [, setUserContext] = useContext(UserContext);
 
   const submitHandler = async (event) => {
     event.preventDefault();

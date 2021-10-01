@@ -9,10 +9,10 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 function Dashboard() {
   const [data, setData] = useState({cars: []});
   const [working, setWorking] = useState(false);
-  const [userContext, setUserContext] = useContext(UserContext)
+  const [userContext,] = useContext(UserContext)
 
-  useEffect(async () => {
-    if (!working) {
+  useEffect(() => {
+    async function fetchData() {
       const result = await axios.get(
         `${BASE_URL}/cars`,
         {
@@ -24,7 +24,10 @@ function Dashboard() {
 
       setData(result.data);
     }
-  }, [working]);
+    if (!working) {
+      fetchData();
+    }
+  }, [working, userContext.token]);
 
   const onDeleteCarTriggered = async (car) => {
     setWorking(true);
@@ -44,7 +47,7 @@ function Dashboard() {
         <div className="cars">
           <p className="subtitle">Cars</p>
           {data.cars.map(car => (
-            <CarPreview car={car} onDeleteCarTriggered={onDeleteCarTriggered}/>
+            <CarPreview key={car._id} car={car} onDeleteCarTriggered={onDeleteCarTriggered}/>
           ))}
         </div>
         <div className="otherSections">

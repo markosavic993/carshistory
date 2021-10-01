@@ -18,10 +18,10 @@ function SingleCar() {
   const [serviceHistoryMileage, setServiceHistoryMileage] = useState(0);
   const [serviceHistoryType, setServiceHistoryType] = useState('INTERIM_SERVICE');
   const [serviceHistoryDescription, setServiceHistoryDescription] = useState('');
-  const [userContext, setUserContext] = useContext(UserContext)
+  const [userContext,] = useContext(UserContext)
 
-  useEffect(async () => {
-    if (!working) {
+  useEffect(() => {
+    async function fetchData() {
       const result = await axios.get(
         `${BASE_URL}/cars/${carId}`,
         {
@@ -33,7 +33,11 @@ function SingleCar() {
 
       setCarDara(result.data);
     }
-  }, [working]);
+
+    if (!working) {
+      fetchData();
+    }
+  }, [working, carId, userContext.token]);
 
   const submitHandler = async (event) => {
     setWorking(true);
@@ -76,7 +80,7 @@ function SingleCar() {
       <Carousel className="appCarousel">
         {carData.images.map(imageUrl => (
           <div>
-            <img src={`${BASE_URL}/${imageUrl}`} alt=""/>
+            <img key={imageUrl} src={`${BASE_URL}/${imageUrl}`} alt=""/>
           </div>
         ))}
       </Carousel>
@@ -101,7 +105,7 @@ function SingleCar() {
         <details>
           <summary className="subtitle">Service history</summary>
           {carData.serviceHistory.map(historyEntry => (
-            <div className="serviceHistoryEntry">
+            <div key={historyEntry._id} className="serviceHistoryEntry">
               <p className="mainDataItem">Service type: {historyEntry.serviceType}</p>
               <p className="mainDataItem">Mileage: {historyEntry.mileage}</p>
               <p className="mainDataItem">Date: {historyEntry.date}</p>

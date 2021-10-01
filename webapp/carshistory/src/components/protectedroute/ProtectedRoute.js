@@ -3,7 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [userContext,] = useContext(UserContext);
 
   const isAuthenticated = userContext.token !== undefined;
 

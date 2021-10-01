@@ -20,7 +20,7 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const VERIFY_USER_TIMEOUT = parseInt(process.env.REACT_APP_VERIFY_USER_TIMEOUT) || 60000;
 
 function App() {
-  const [userContext, setUserContext] = useContext(UserContext);
+  const [, setUserContext] = useContext(UserContext);
 
   const verifyUser = useCallback(() => {
     axios.post(`${BASE_URL}/users/refreshToken`,
