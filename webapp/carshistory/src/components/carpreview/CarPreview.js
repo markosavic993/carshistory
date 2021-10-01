@@ -1,6 +1,8 @@
 import './CarPreview.scss';
 import {Link} from "react-router-dom";
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 function CarPreview(props) {
   const { car, onDeleteCarTriggered } = props;
 
@@ -21,7 +23,7 @@ function CarPreview(props) {
           <a className="dangerButton" onClick={deleteCarHandler}>Delete</a>
         </div>
       </div>
-      <img src={`http://localhost:5000/${car.images[0]}`} alt="" className="cardImage"/>
+      <img src={`${BASE_URL}/${car.images[0]}`} alt="" className="cardImage"/>
     </div>
   );
 }

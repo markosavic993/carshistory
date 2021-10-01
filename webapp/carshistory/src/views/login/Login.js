@@ -4,6 +4,8 @@ import axios from 'axios';
 import {UserContext} from '../../context/UserContext';
 import {Link, useHistory} from "react-router-dom";
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 function Login(props) {
   const history = useHistory();
 
@@ -25,7 +27,7 @@ function Login(props) {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    const result = await axios.post(`http://localhost:5000/users/login`,
+    const result = await axios.post(`${BASE_URL}/users/login`,
       {
         password: state.password,
         username: state.email

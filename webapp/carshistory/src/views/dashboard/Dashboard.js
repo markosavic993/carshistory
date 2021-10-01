@@ -4,6 +4,8 @@ import axios from "axios";
 import CarPreview from "../../components/carpreview/CarPreview";
 import {UserContext} from "../../context/UserContext";
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 function Dashboard() {
   const [data, setData] = useState({cars: []});
   const [working, setWorking] = useState(false);
@@ -12,7 +14,7 @@ function Dashboard() {
   useEffect(async () => {
     if (!working) {
       const result = await axios.get(
-        'http://localhost:5000/cars',
+        `${BASE_URL}/cars`,
         {
           headers: {
             'Authorization': `Bearer ${userContext.token}`
@@ -26,7 +28,7 @@ function Dashboard() {
 
   const onDeleteCarTriggered = async (car) => {
     setWorking(true);
-    await axios.delete(`http://localhost:5000/cars/${car._id}`,
+    await axios.delete(`${BASE_URL}/cars/${car._id}`,
       {
         headers: {
           'Authorization': `Bearer ${userContext.token}`

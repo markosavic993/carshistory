@@ -5,6 +5,8 @@ import axios from "axios";
 import {UserContext} from "../../context/UserContext";
 import ImageUploading from 'react-images-uploading';
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 function CreateUpdateCar() {
   const history = useHistory();
   const [userContext, setUserContext] = useContext(UserContext)
@@ -27,7 +29,7 @@ function CreateUpdateCar() {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    const result = await axios.post('http://localhost:5000/cars',
+    const result = await axios.post(`${BASE_URL}/cars`,
       {
         vin, make, model, productionYear, mileage, color, transmission, country: countryOrigin,
         engine: {
@@ -48,7 +50,6 @@ function CreateUpdateCar() {
   const uploadImages = async (carId) => {
     for (let i = 0; i < images.length; i++){
       const file = images[i].file;
-      console.log("Upload Image", file);
       const formData = new FormData();
       formData.append("myFile", file);
       const config = {
@@ -57,8 +58,7 @@ function CreateUpdateCar() {
           'Authorization': `Bearer ${userContext.token}`
         }
       };
-      const result = await axios.post(`http://localhost:5000/cars/${carId}/upload`, formData, config);
-      console.log("REsult: ", result);
+      const result = await axios.post(`${BASE_URL}/cars/${carId}/upload`, formData, config);
     }
   };
 

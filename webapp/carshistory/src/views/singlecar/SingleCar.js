@@ -8,6 +8,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import {Carousel} from 'react-responsive-carousel';
 import {UserContext} from "../../context/UserContext";
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 function SingleCar() {
   const {carId} = useParams();
   const [carData, setCarDara] = useState({images: [], serviceHistory: []});
@@ -21,7 +23,7 @@ function SingleCar() {
   useEffect(async () => {
     if (!working) {
       const result = await axios.get(
-        `http://localhost:5000/cars/${carId}`,
+        `${BASE_URL}/cars/${carId}`,
         {
           headers: {
             'Authorization': `Bearer ${userContext.token}`
@@ -36,7 +38,7 @@ function SingleCar() {
   const submitHandler = async (event) => {
     setWorking(true);
     event.preventDefault();
-    await axios.post(`http://localhost:5000/cars/${carId}/services`,
+    await axios.post(`${BASE_URL}/cars/${carId}/services`,
       {
         date: serviceHistoryDate,
         mileage: serviceHistoryMileage,
@@ -59,7 +61,7 @@ function SingleCar() {
 
   const deleteServiceHistoryHandler = async (event, serviceHistoryEntryId) => {
     setWorking(true);
-    await axios.delete(`http://localhost:5000/cars/${carId}/services/${serviceHistoryEntryId}`,
+    await axios.delete(`${BASE_URL}/cars/${carId}/services/${serviceHistoryEntryId}`,
       {
         headers: {
           'Authorization': `Bearer ${userContext.token}`
@@ -74,7 +76,7 @@ function SingleCar() {
       <Carousel className="appCarousel">
         {carData.images.map(imageUrl => (
           <div>
-            <img src={`http://localhost:5000/${imageUrl}`} alt=""/>
+            <img src={`${BASE_URL}/${imageUrl}`} alt=""/>
           </div>
         ))}
       </Carousel>

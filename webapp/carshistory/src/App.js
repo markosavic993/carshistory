@@ -16,11 +16,14 @@ import {useCallback, useContext, useEffect} from 'react';
 import {UserContext} from './context/UserContext';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const VERIFY_USER_TIMEOUT = parseInt(process.env.REACT_APP_VERIFY_USER_TIMEOUT) || 60000;
+
 function App() {
   const [userContext, setUserContext] = useContext(UserContext);
 
   const verifyUser = useCallback(() => {
-    axios.post('http://localhost:5000/users/refreshToken',
+    axios.post(`${BASE_URL}/users/refreshToken`,
       {},
       { withCredentials: true }
     ).then(async response => {
@@ -34,8 +37,7 @@ function App() {
           return {...oldValues, token: null}
         })
       }
-      // call refreshToken every 5 minutes to renew the authentication token.
-      setTimeout(verifyUser, 1 * 60 * 1000)
+      setTimeout(verifyUser, VERIFY_USER_TIMEOUT)
     })
   }, [setUserContext]);
 
