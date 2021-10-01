@@ -7,8 +7,19 @@ import {Link, useHistory} from "react-router-dom";
 function Login(props) {
   const history = useHistory();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [state, setState] = useState({
+    email: '',
+    password: ''
+  });
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setState(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  }
+
   const [userContext, setUserContext] = useContext(UserContext);
 
   const submitHandler = async (event) => {
@@ -16,8 +27,8 @@ function Login(props) {
 
     const result = await axios.post(`http://localhost:5000/users/login`,
       {
-        password,
-        username: email
+        password: state.password,
+        username: state.email
       }, {
         withCredentials: true
       });
@@ -37,16 +48,18 @@ function Login(props) {
         <label className="formField">
           Email
           <input type="email"
-                 value={email}
-                 onChange={e => setEmail(e.target.value)}
+                 value={state.email}
+                 onChange={handleChange}
+                 name="email"
                  required/>
         </label>
 
         <label className="formField">
           Password
           <input type="password"
-                 value={password}
-                 onChange={e => setPassword(e.target.value)}
+                 value={state.password}
+                 onChange={handleChange}
+                 name="password"
                  required/>
         </label>
 

@@ -7,10 +7,21 @@ import {Link, useHistory} from "react-router-dom";
 function Register(props) {
   const history = useHistory();
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: ''
+  });
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setState(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  }
+
   const [userContext, setUserContext] = useContext(UserContext);
 
   const submitHandler = async (event) => {
@@ -18,10 +29,10 @@ function Register(props) {
 
     const result = await axios.post(`http://localhost:5000/users/signup`,
       {
-        firstName,
-        lastName,
-        password,
-        username: email
+        firstName: state.firstName,
+        lastName: state.lastName,
+        password: state.password,
+        username: state.email
       }, {
         withCredentials: true
       });
@@ -40,32 +51,36 @@ function Register(props) {
         <label className="formField">
           First name
           <input type="text"
-                 value={firstName}
-                 onChange={e => setFirstName(e.target.value)}
+                 value={state.firstName}
+                 onChange={handleChange}
+                 name="firstName"
                  required/>
         </label>
 
         <label className="formField">
           Last name
           <input type="text"
-                 value={lastName}
-                 onChange={e => setLastName(e.target.value)}
+                 value={state.lastName}
+                 onChange={handleChange}
+                 name="lastName"
                  required/>
         </label>
 
         <label className="formField">
           Email
           <input type="email"
-                 value={email}
-                 onChange={e => setEmail(e.target.value)}
+                 value={state.email}
+                 onChange={handleChange}
+                 name="email"
                  required/>
         </label>
 
         <label className="formField">
           Password
           <input type="password"
-                 value={password}
-                 onChange={e => setPassword(e.target.value)}
+                 value={state.password}
+                 onChange={handleChange}
+                 name="password"
                  required/>
         </label>
 
